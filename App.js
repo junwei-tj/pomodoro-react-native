@@ -1,6 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View, Button, Vibration } from 'react-native';
+import { NavigationContainer, StackActions } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+
+const Stack = createStackNavigator();
 
 const WORK_TIME = 1*30*1000; // in milliseconds
 const SHORT_BREAK_TIME = 1*10*1000;
@@ -31,7 +35,6 @@ const sessions = {
 };
 
 export default class App extends React.Component {
-
   state = {
     timeLeft: WORK_TIME,
     session: sessions.WORK, 
@@ -84,7 +87,6 @@ export default class App extends React.Component {
   }
 
   nextSession = (didSessionComplete) => {
-    
     if (this.state.session !== sessions.WORK) // if current session is break, then next session is work
       this.setState({session: sessions.WORK, timeLeft: WORK_TIME});
     else {
