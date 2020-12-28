@@ -116,6 +116,14 @@ export default class PomodoroTimer extends React.Component {
     return (min < 10 ? "0"+min : min) + ":" + (seconds < 10 ? "0"+seconds : seconds);
   };
 
+  updateSessionLength = (newLengths) => {
+    this.setState({
+      workTime: newLengths["workTime"],
+      shortBreakTime: newLengths["shortBreakTime"],
+      longBreakTime: newLengths["longBreakTime"],
+    }, this.resetTimer);
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -141,12 +149,15 @@ export default class PomodoroTimer extends React.Component {
         <Button 
           title="Settings" 
           onPress={() => 
-            this.props.navigation.navigate("Settings", {
+            {
+              console.log(this.state);
+              this.props.navigation.navigate("Settings", {
               workTime: this.state.workTime,
               shortBreakTime: this.state.shortBreakTime,
               longBreakTime: this.state.longBreakTime,
+              onGoBack: this.updateSessionLength,
             }
-          )} />
+          )}} />
         <StatusBar style="auto" />
       </View>
     );

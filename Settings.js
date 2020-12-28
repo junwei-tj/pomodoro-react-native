@@ -41,7 +41,7 @@ function millisecondsToText(timeInMilliseconds) {
 
 function textToMilliseconds(timeInText) {
   [min, seconds] = timeInText.split(":");
-  return (min*60 + seconds)*1000;
+  return (+min*60 + +seconds)*1000;
 }
 
 function validateTimeText(timeInText) {
@@ -54,7 +54,7 @@ function areAllValid(workTime, shortBreakTime, longBreakTime) {
 
 /* Used functions here to test out useState() */
 export default function Settings({ navigation, route }) {
-  // times are in minutes
+  // times are in mm:ss
   const [workTime, setWorkTime] = useState(millisecondsToText(route.params.workTime));
   const [shortBreakTime, setShortBreak] = useState(millisecondsToText(route.params.shortBreakTime));
   const [longBreakTime, setLongBreak] = useState(millisecondsToText(route.params.longBreakTime));
@@ -88,7 +88,11 @@ export default function Settings({ navigation, route }) {
       <View style={[styles.row, {justifyContent: 'center'}]}>
         <Button 
           title="Save Changes" 
-          onPress={() => navigation.goBack()}
+          onPress={() => {
+            let newLengths = {workTime: textToMilliseconds(workTime), shortBreakTime: textToMilliseconds(shortBreakTime), longBreakTime: textToMilliseconds(longBreakTime)};
+            route.params.onGoBack(newLengths);
+            navigation.navigate("HomeScreen");
+          }}
           disabled={!areAllValid(workTime, shortBreakTime, longBreakTime)} />
       </View>
       
