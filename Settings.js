@@ -90,7 +90,7 @@ export default function Settings({ navigation, route }) {
           title="Save Changes" 
           onPress={() => {
             let newLengths = {workTime: textToMilliseconds(workTime), shortBreakTime: textToMilliseconds(shortBreakTime), longBreakTime: textToMilliseconds(longBreakTime)};
-            route.params.onGoBack(newLengths);
+            route.params.onGoBack(newLengths); // when returning to prev screen, call the updateSessionLength method
             navigation.navigate("HomeScreen");
           }}
           disabled={!areAllValid(workTime, shortBreakTime, longBreakTime)} />

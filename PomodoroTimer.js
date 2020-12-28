@@ -87,6 +87,7 @@ export default class PomodoroTimer extends React.Component {
     this.nextSession(false);
   }
 
+  // determines what the next session should be
   nextSession = (didSessionComplete) => {
     if (this.state.session !== sessions.WORK) // if current session is break, then next session is work
       this.setState({session: sessions.WORK, timeLeft: this.state.workTime});
@@ -105,7 +106,7 @@ export default class PomodoroTimer extends React.Component {
     }
   }
 
-  // returns time in mm:ss format
+  // returns timeLeft in mm:ss format
   getTime = () => {
     let min = 0;
     let seconds = this.state.timeLeft / 1000;
@@ -116,6 +117,7 @@ export default class PomodoroTimer extends React.Component {
     return (min < 10 ? "0"+min : min) + ":" + (seconds < 10 ? "0"+seconds : seconds);
   };
 
+  // function to update session lengths with values from settings screen
   updateSessionLength = (newLengths) => {
     this.setState({
       workTime: newLengths["workTime"],
@@ -148,16 +150,13 @@ export default class PomodoroTimer extends React.Component {
         <Text style={styles.verticalSpacing}>Completed Pomodoros: {this.state.pomodoros}</Text>
         <Button 
           title="Settings" 
-          onPress={() => 
-            {
-              console.log(this.state);
-              this.props.navigation.navigate("Settings", {
+          onPress={() => this.props.navigation.navigate("Settings", {
               workTime: this.state.workTime,
               shortBreakTime: this.state.shortBreakTime,
               longBreakTime: this.state.longBreakTime,
-              onGoBack: this.updateSessionLength,
+              onGoBack: this.updateSessionLength, // pass the function so when returning to this screen, the previous screen can update this.state
             }
-          )}} />
+          )} />
         <StatusBar style="auto" />
       </View>
     );
