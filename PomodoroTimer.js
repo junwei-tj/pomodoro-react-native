@@ -53,6 +53,7 @@ export default class PomodoroTimer extends React.Component {
           this.setState(prevState => ({timeLeft: prevState.timeLeft - 1000}));
         else { // timer finished
           Vibration.vibrate(1000);
+          this.stopTimer();
           this.nextSession(true);
         }
       }

@@ -45,7 +45,7 @@ function textToMilliseconds(timeInText) {
 }
 
 function validateTimeText(timeInText) {
-  return /^[0-9][0-9]:[0-9][0-9]$/.test(timeInText);
+  return /^[0-9][0-9]:[0-5][0-9]$/.test(timeInText);
 }
 
 function areAllValid(workTime, shortBreakTime, longBreakTime) {
